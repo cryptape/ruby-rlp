@@ -1,0 +1,9 @@
+module RLP
+  module Constant
+    SHORT_LENGTH_LIMIT = 56
+    LONG_LENGTH_LIMIT = 256**8
+
+    PRIMITIVE_PREFIX_OFFSET = 0x80
+    LIST_PREFIX_OFFSET = 0xc0
+  end
+end

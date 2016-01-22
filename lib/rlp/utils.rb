@@ -13,5 +13,11 @@ module RLP
       hex = "0#{hex}" if hex.size.odd?
       [hex].pack('H*')
     end
+
+    def encode_hex(b)
+      raise ArgumentError, "Value must be an instance of String"  unless b.instance_of?(String)
+      b = str_to_bytes(b) unless b.encoding.name == 'ASCII-8BIT'
+      b.unpack("H*").first
+    end
   end
 end

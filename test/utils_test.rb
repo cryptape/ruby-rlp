@@ -8,7 +8,7 @@ class UtilsTest < Minitest::Test
   end
 
   def test_str_to_bytes
-    assert_equal 'ASCII-8BITS', str_to_bytes("abc").encoding.name
+    assert_equal 'ASCII-8BIT', str_to_bytes("abc").encoding.name
   end
 
   def test_int_to_big_endian
