@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'rlp'
 
 ##################
 # Helper Methods #
