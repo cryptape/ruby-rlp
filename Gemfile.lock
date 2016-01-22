@@ -1,0 +1,21 @@
+PATH
+  remote: .
+  specs:
+    rlp (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.8.3)
+    rake (10.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  minitest (= 5.8.3)
+  rake (~> 10.5.0)
+  rlp!
+
+BUNDLED WITH
+   1.11.2
