@@ -11,6 +11,15 @@ class UtilsTest < Minitest::Test
     assert_equal 'ASCII-8BIT', str_to_bytes("abc").encoding.name
   end
 
+  def test_big_endian_to_int
+    int = [0, 100000, 100000000, 2**256-1]
+    bytes = ["\x00", "\x01\x86\xa0", "\x05\xf5\xe1\x00", "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"].map {|s| s.force_encoding("ascii-8bit") }
+
+    int.zip(bytes).each do |i, b|
+      assert_equal i, big_endian_to_int(b)
+    end
+  end
+
   def test_int_to_big_endian
     int = [0, 100000, 100000000, 2**256-1]
     bytes = ["\x00", "\x01\x86\xa0", "\x05\xf5\xe1\x00", "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff"].map {|s| s.force_encoding("ascii-8bit") }

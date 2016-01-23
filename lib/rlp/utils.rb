@@ -8,6 +8,10 @@ module RLP
       v.dup.force_encoding('ascii-8bit')
     end
 
+    def big_endian_to_int(v)
+      v.unpack('H*').first.to_i(16)
+    end
+
     def int_to_big_endian(v)
       hex = v.to_s(16)
       hex = "0#{hex}" if hex.size.odd?
