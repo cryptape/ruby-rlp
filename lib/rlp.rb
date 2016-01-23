@@ -1,9 +1,12 @@
 require 'rlp/constant'
 require 'rlp/data'
+require 'rlp/error'
 require 'rlp/utils'
+require 'rlp/sedes'
 
 module RLP
   include Constant
+  include Error
   include Utils
 
   extend self
@@ -15,9 +18,7 @@ module RLP
       # TODO: customize sedes flow
       #item = sedes.serialize(obj)
     elsif infer_serializer
-      # TODO: infer serializer
-      #item = infer_sedes(obj).serialize(obj)
-      item = obj
+      item = Sedes.infer(obj).serialize(obj)
     else
       item = obj
     end
@@ -33,14 +34,6 @@ module RLP
 
     msg = "Cannot encode object of type %s" % item.class.name
     raise ArgumentError, msg
-  end
-
-  def primitive?(item)
-    item.instance_of?(String)
-  end
-
-  def list?(item)
-    item.respond_to?(:each)
   end
 
   def encode_primitive(item)
@@ -70,4 +63,5 @@ module RLP
       raise ArgumentError, "Length greater than 256**8"
     end
   end
+
 end

@@ -1,5 +1,13 @@
 module RLP
   module Utils
+    def primitive?(item)
+      item.instance_of?(String)
+    end
+
+    def list?(item)
+      item.respond_to?(:each)
+    end
+
     def bytes_to_str(v)
       v.unpack('U*').pack('U*')
     end
