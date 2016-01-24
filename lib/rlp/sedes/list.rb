@@ -4,8 +4,8 @@ module RLP
     # A sedes for lists of fixed length
     #
     class List < Array
-      include RLP::Error
-      include RLP::Utils
+      include Error
+      include Utils
 
       def initialize(elements: [], strict: true)
         super()

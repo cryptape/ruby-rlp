@@ -22,7 +22,7 @@ class SedesTest < Minitest::Test
         assert_equal sedes, inferred
         sedes.serialize(obj)
       else
-        assert_raises ArgumentError do
+        assert_raises TypeError do
           Sedes.infer obj
         end
       end

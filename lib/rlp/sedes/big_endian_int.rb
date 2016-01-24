@@ -1,7 +1,8 @@
 module RLP
   module Sedes
     class BigEndianInt
-      include RLP::Utils
+      include Error
+      include Utils
 
       ZERO = "\x00".force_encoding('ascii-8bit').freeze
       EMPTY = ''.force_encoding('ascii-8bit').freeze
@@ -11,12 +12,12 @@ module RLP
       end
 
       def serialize(obj)
-        raise ArgumentError, "Can only serialize integers" unless obj.is_a?(Integer)
-        raise ArgumentError, "Cannot serialize negative integers" if obj < 0
+        raise SerializationError.new("Can only serialize integers", obj) unless obj.is_a?(Integer)
+        raise SerializationError.new("Cannot serialize negative integers", obj) if obj < 0
 
         if @size && obj >= 256**@size
           msg = "Integer too large (does not fit in %s bytes)" % @size
-          raise ArgumentError, msg
+          raise SerializationError.new(message: msg, obj: obj)
         end
 
         s = obj == 0 ? ZERO : int_to_big_endian(obj)
@@ -25,8 +26,8 @@ module RLP
       end
 
       def deserialize(serial)
-        raise ArgumentError, "Invalid serialization (wrong size)" if @size && serial.size != @size
-        raise ArgumentError, "Invalid serialization (not minimal length)" if !@size && serial.size > 0 && serial[0] == ZERO
+        raise DeserializationError.new("Invalid serialization (wrong size)", serial) if @size && serial.size != @size
+        raise DeserializationError.new("Invalid serialization (not minimal length)", serial) if !@size && serial.size > 0 && serial[0] == ZERO
 
         serial = serial || ZERO
         big_endian_to_int(serial)

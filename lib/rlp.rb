@@ -33,7 +33,7 @@ module RLP
     return encode_list(item) if list?(item)
 
     msg = "Cannot encode object of type %s" % item.class.name
-    raise ArgumentError, msg
+    raise EncodingError.new(msg, item)
   end
 
   def encode_primitive(item)

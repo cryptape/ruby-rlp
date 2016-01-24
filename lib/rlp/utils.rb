@@ -27,7 +27,7 @@ module RLP
     end
 
     def encode_hex(b)
-      raise ArgumentError, "Value must be an instance of String"  unless b.instance_of?(String)
+      raise TypeError, "Value must be an instance of String" unless b.instance_of?(String)
       b = str_to_bytes(b) unless b.encoding.name == 'ASCII-8BIT'
       b.unpack("H*").first
     end

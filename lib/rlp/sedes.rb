@@ -14,7 +14,7 @@ module RLP
         return List.new(elements: obj.map {|item| infer(item) }) if RLP.list?(obj)
 
         msg = "Did not find sedes handling type %s" % obj.class.name
-        raise ArgumentError, msg
+        raise TypeError, msg
       end
 
       def sedes?(obj)
