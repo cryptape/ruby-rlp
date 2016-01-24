@@ -1,5 +1,8 @@
 module RLP
   module Sedes
+    ##
+    # A sedes for lists of fixed length
+    #
     class List < Array
       include RLP::Error
       include RLP::Utils
@@ -53,11 +56,8 @@ module RLP
           end
         end
 
-        result
+        result.freeze
       end
     end
-
-#TODO: CountableList
-
   end
 end

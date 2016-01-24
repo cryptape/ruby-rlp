@@ -1,6 +1,7 @@
 require_relative 'sedes/big_endian_int'
 require_relative 'sedes/binary'
 require_relative 'sedes/list'
+require_relative 'sedes/countable_list'
 
 module RLP
   module Sedes
