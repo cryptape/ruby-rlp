@@ -2,6 +2,7 @@ require_relative 'sedes/big_endian_int'
 require_relative 'sedes/binary'
 require_relative 'sedes/list'
 require_relative 'sedes/countable_list'
+require_relative 'sedes/raw'
 
 module RLP
   module Sedes
@@ -27,6 +28,10 @@ module RLP
 
       def binary
         @binary ||= Binary.new
+      end
+
+      def raw
+        @raw ||= Raw.new
       end
     end
 

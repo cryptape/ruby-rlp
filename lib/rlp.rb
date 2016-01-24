@@ -15,8 +15,7 @@ module RLP
     # TODO: cache flow
 
     if sedes
-      # TODO: customize sedes flow
-      #item = sedes.serialize(obj)
+      item = sedes.serialize(obj)
     elsif infer_serializer
       item = Sedes.infer(obj).serialize(obj)
     else
