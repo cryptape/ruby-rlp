@@ -20,7 +20,7 @@ module RLP
           raise SerializationError.new(msg, obj)
         end
 
-        s = obj == 0 ? ZERO : int_to_big_endian(obj)
+        s = obj == 0 ? EMPTY : int_to_big_endian(obj)
 
         @size ? "#{ZERO * [0, @size-s.size].max}#{s}" : s
       end
