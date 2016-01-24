@@ -7,7 +7,7 @@ module RLP
       ZERO = "\x00".force_encoding('ascii-8bit').freeze
       EMPTY = ''.force_encoding('ascii-8bit').freeze
 
-      def initialize(size: nil)
+      def initialize(size=nil)
         @size = size
       end
 
@@ -17,7 +17,7 @@ module RLP
 
         if @size && obj >= 256**@size
           msg = "Integer too large (does not fit in %s bytes)" % @size
-          raise SerializationError.new(message: msg, obj: obj)
+          raise SerializationError.new(msg, obj)
         end
 
         s = obj == 0 ? ZERO : int_to_big_endian(obj)
