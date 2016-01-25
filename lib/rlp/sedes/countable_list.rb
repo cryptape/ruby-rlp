@@ -24,7 +24,7 @@ module RLP
           end
 
           if @max_length && result.size > @max_length
-            msg = "Too many elements (%s, allowed %s)" % [result.size, @max_length]
+            msg = "Too many elements (#{result.size}, allowed #{@max_length})"
             raise ListSerializationError.new(message: msg, obj: obj)
           end
         end
@@ -44,7 +44,7 @@ module RLP
           end
 
           if @max_length && result.size > @max_length
-            msg = "Too many elements (%s, allowed %s)" % [result.size, @max_length]
+            msg = "Too many elements (#{result.size}, allowed #{@max_length})"
             raise ListDeserializationError.new(message: msg, serial: serial)
           end
         end

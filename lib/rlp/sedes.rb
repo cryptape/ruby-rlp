@@ -14,8 +14,7 @@ module RLP
         return binary if Binary.valid_type?(obj)
         return List.new(elements: obj.map {|item| infer(item) }) if RLP.list?(obj)
 
-        msg = "Did not find sedes handling type %s" % obj.class.name
-        raise TypeError, msg
+        raise TypeError, "Did not find sedes handling type #{obj.class.name}"
       end
 
       def sedes?(obj)

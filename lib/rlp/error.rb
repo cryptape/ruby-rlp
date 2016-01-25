@@ -39,7 +39,7 @@ module RLP
       def initialize(message: nil, obj: nil, element_exception: nil, index: nil)
         if message.nil?
           raise ArgumentError, "index and element_exception must be present" if index.nil? || element_exception.nil?
-          message = 'Serialization failed because of element at index %s ("%s")' % [index, element_exception]
+          message = "Serialization failed because of element at index #{index} ('#{element_exception}')"
         end
 
         super(message, obj)
@@ -53,7 +53,7 @@ module RLP
       def initialize(message: nil, serial: nil, element_exception: nil, index: nil)
         if message.nil?
           raise ArgumentError, "index and element_exception must be present" if index.nil? || element_exception.nil?
-          message = 'Deserialization failed because of element at index %s ("%s")' % [index, element_exception]
+          message = "Deserialization failed because of element at index #{index} ('#{element_exception}')"
         end
 
         super(message, serial)

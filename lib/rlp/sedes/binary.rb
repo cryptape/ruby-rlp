@@ -18,7 +18,7 @@ module RLP
       end
 
       def serialize(obj)
-        raise SerializationError.new("Object is not a serializable (%s)" % obj.class, obj) unless self.class.valid_type?(obj)
+        raise SerializationError.new("Object is not a serializable (#{obj.class})", obj) unless self.class.valid_type?(obj)
 
         serial = str_to_bytes obj
         raise SerializationError.new("Object has invalid length", serial) unless valid_length?(serial.size)
@@ -27,8 +27,8 @@ module RLP
       end
 
       def deserialize(serial)
-        raise DeserializationError.new("Objects of type %s cannot be deserialized" % serial.class, serial) unless primitive?(serial)
-        raise DeserializationError.new("%s has invalid length" % serial.class, serial) unless valid_length?(serial.size)
+        raise DeserializationError.new("Objects of type #{serial.class} cannot be deserialized", serial) unless primitive?(serial)
+        raise DeserializationError.new("#{serial.class} has invalid length", serial) unless valid_length?(serial.size)
 
         serial
       end

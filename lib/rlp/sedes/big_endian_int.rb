@@ -14,7 +14,7 @@ module RLP
         raise SerializationError.new("Cannot serialize negative integers", obj) if obj < 0
 
         if @size && obj >= 256**@size
-          msg = "Integer too large (does not fit in %s bytes)" % @size
+          msg = "Integer too large (does not fit in #{@size} bytes)"
           raise SerializationError.new(msg, obj)
         end
 
