@@ -1,4 +1,5 @@
 require 'rake/testtask'
+require 'yard'
 
 Rake::TestTask.new do |t|
   t.libs += %w(lib test)
@@ -6,4 +7,9 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-task default: :test
+YARD::Rake::YardocTask.new do |t|
+  t.files = ['lib/**/*.rb']
+  t.options = ['--markup=markdown']
+end
+
+task default: [:test, :yard]

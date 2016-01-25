@@ -8,6 +8,7 @@ GEM
   specs:
     minitest (5.8.3)
     rake (10.5.0)
+    yard (0.8.7.6)
 
 PLATFORMS
   ruby
@@ -16,6 +17,7 @@ DEPENDENCIES
   minitest (= 5.8.3)
   rake (~> 10.5.0)
   rlp!
+  yard (= 0.8.7.6)
 
 BUNDLED WITH
    1.11.2
