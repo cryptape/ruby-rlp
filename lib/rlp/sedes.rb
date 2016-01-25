@@ -3,6 +3,7 @@ require_relative 'sedes/binary'
 require_relative 'sedes/list'
 require_relative 'sedes/countable_list'
 require_relative 'sedes/raw'
+require_relative 'sedes/serializable'
 
 module RLP
   module Sedes
