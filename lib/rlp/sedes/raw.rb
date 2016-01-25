@@ -6,10 +6,11 @@ module RLP
     # deserializing larger structures.
     #
     class Raw
+      include Error
       include Utils
 
       def serialize(obj)
-        raise SerializationError("Can only serialize nested lists of strings", obj) unless serializable?(obj)
+        raise SerializationError.new("Can only serialize nested lists of strings", obj) unless serializable?(obj)
         obj
       end
 

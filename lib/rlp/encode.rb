@@ -19,6 +19,8 @@ module RLP
       result
     end
 
+    private
+
     def encode_raw(item)
       return item if item.instance_of?(RLP::Data)
       return encode_primitive(item) if primitive?(item)

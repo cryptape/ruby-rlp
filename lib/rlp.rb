@@ -5,9 +5,11 @@ require 'rlp/utils'
 require 'rlp/sedes'
 
 require 'rlp/encode'
+require 'rlp/decode'
 
 module RLP
   include Encode
+  include Decode
 
   extend self
 end
