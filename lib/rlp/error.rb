@@ -83,8 +83,8 @@ module RLP
       attr :field, :list_exception
 
       ##
-      # @param sedes [{RLP::Sedes::Serializable}] the sedes that failed
-      # @param list_exception [Exception] exception raised by the underlying
+      # @param sedes [RLP::Sedes::Serializable] the sedes that failed
+      # @param list_exception [RLP::Error::ListSerializationError] exception raised by the underlying
       #   list sedes, or `nil` if no exception has been raised
       #
       def initialize(message: nil, obj: nil, sedes: nil, list_exception: nil)
@@ -116,8 +116,8 @@ module RLP
       attr :sedes, :field, :list_exception
 
       ##
-      # @param sedes [{RLP::Sedes::Serializable}] the sedes that failed
-      # @param list_exception [{RLP::ListDeserializationError] exception raised
+      # @param sedes [RLP::Sedes::Serializable] the sedes that failed
+      # @param list_exception [RLP::ListDeserializationError] exception raised
       #   by the underlying list sedes, or `nil` if no such exception has been
       #   raised
       #
