@@ -73,9 +73,9 @@ class SerializableSedesTest < Minitest::Test
     t1a_d = Test1.deserialize t1a_s
     t1b_d = Test1.deserialize t1b_s
     t2_d  = Test2.deserialize t2_s
-    assert_equal false, t1a_d._mutable?
-    assert_equal false, t1b_d._mutable?
-    assert_equal false, t2_d._mutable?
+    assert_equal false, t1a_d.mutable?
+    assert_equal false, t1b_d.mutable?
+    assert_equal false, t2_d.mutable?
 
     [t1a_d, t1b_d].each do |obj|
       before1 = obj.field1
@@ -94,21 +94,21 @@ class SerializableSedesTest < Minitest::Test
     [t1a, t1b, t2].each do |obj|
       rlp_code = encode obj
 
-      #assert_nil obj._cached_rlp # TODO: test cache
-      assert_equal true, obj._mutable?
+      assert_nil obj._cached_rlp
+      assert_equal true, obj.mutable?
 
       assert_equal rlp_code, encode(obj, cache: true)
-      #assert_equal rlp_code, obj._cached_rlp
-      #assert_equal false, obj._mutable?
+      assert_equal rlp_code, obj._cached_rlp
+      assert_equal false, obj.mutable?
 
       assert_equal rlp_code, encode(obj)
-      #assert_equal rlp_code, obj._cached_rlp
-      #assert_equal false, obj._mutable?
+      assert_equal rlp_code, obj._cached_rlp
+      assert_equal false, obj.mutable?
 
       obj_decoded = decode rlp_code, sedes: obj.class
       assert_equal obj, obj_decoded
-      assert_equal false, obj_decoded._mutable?
-      #assert_equal rlp_code, obj_decoded._cached_rlp
+      assert_equal false, obj_decoded.mutable?
+      assert_equal rlp_code, obj_decoded._cached_rlp
     end
   end
 

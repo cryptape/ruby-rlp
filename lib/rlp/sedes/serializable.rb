@@ -76,6 +76,8 @@ module RLP
         end
       end
 
+      attr_accessor :_cached_rlp
+
       def initialize(*args)
         serializable_initialize(*args)
       end
@@ -101,27 +103,36 @@ module RLP
         raise TypeError, "Not all fields initialized" unless field_set.size == 0
       end
 
-      def ==(other)
-        return false unless other.class.respond_to?(:serialize)
-        self.class.serialize(self) == other.class.serialize(other)
-      end
-
       def _set_field(field, value)
         unless instance_variable_defined?(:@_mutable)
           @_mutable = true
         end
 
-        if _mutable? || !self.class.serializable_fields.has_key?(field)
+        if mutable? || !self.class.serializable_fields.has_key?(field)
           instance_variable_set :"@#{field}", value
         else
           raise ArgumentError, "Tried to mutate immutable object"
         end
       end
 
-      def _mutable?
+      def ==(other)
+        return false unless other.class.respond_to?(:serialize)
+        self.class.serialize(self) == other.class.serialize(other)
+      end
+
+      def mutable?
         @_mutable
       end
 
+      def make_immutable!
+        @_mutable = true
+        self.class.serializable_fields.keys.each do |field|
+          ::RLP::Utils.make_immutable! send(field)
+        end
+
+        @_mutable = false
+        self
+      end
     end
   end
 end

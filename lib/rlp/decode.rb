@@ -19,8 +19,16 @@ module RLP
       raise DecodingError.new("RLP string ends with #{rlp.size - next_start} superfluous bytes", rlp) if next_start != rlp.size && strict
 
       if sedes
-        obj = sedes.deserialize(item) # TODO: (options)
-        #TODO: cache flow
+        # FIXME: lazy man's kwargs
+        obj = sedes.is_a?(Sedes::Serializable) ?
+          sedes.deserialize(item, exclude: options[:exclude], extra: options[:extra]) :
+          sedes.deserialize(item)
+
+        if obj.respond_to?(:_cached_rlp)
+          obj._cached_rlp = rlp
+          raise "RLP::Sedes::Serializable object must be immutable after decode" if obj.is_a?(Sedes::Serializable) && obj.mutable?
+        end
+
         obj
       else
         item

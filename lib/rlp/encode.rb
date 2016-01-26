@@ -39,7 +39,9 @@ module RLP
     # @raise [RLP::SerializationError] if the serialization fails
     #
     def encode(obj, sedes: nil, infer_serializer: true, cache: false)
-      # TODO: cache flow
+      return obj._cached_rlp if obj.is_a?(Sedes::Serializable) && obj._cached_rlp && sedes.nil?
+
+      really_cache = obj.is_a?(Sedes::Serializable) && sedes.nil? && cache
 
       if sedes
         item = sedes.serialize(obj)
@@ -50,6 +52,12 @@ module RLP
       end
 
       result = encode_raw(item)
+
+      if really_cache
+        obj._cached_rlp = result
+        obj.make_immutable!
+      end
+
       result
     end
 

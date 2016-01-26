@@ -1,5 +1,30 @@
 module RLP
   module Utils
+    class <<self
+      ##
+      # Do your best to make `obj` as immutable as possible.
+      #
+      # If `obj` is a list, apply this function recursively to all elements and
+      # return a new list containing them. If `obj` is an instance of
+      # {RLP::Sedes::Serializable}, apply this function to its fields, and set
+      # `@_mutable` to `false`. If `obj` is neither of the above, just return
+      # `obj`.
+      #
+      # @return [Object] `obj` after making it immutable
+      #
+      def make_immutable!(obj)
+        if obj.is_a?(Sedes::Serializable)
+          obj.make_immutable!
+        elsif list?(obj)
+          obj.map {|e| make_immutable!(e) }
+        else
+          obj
+        end
+      end
+    end
+
+    extend self
+
     def primitive?(item)
       item.instance_of?(String)
     end
