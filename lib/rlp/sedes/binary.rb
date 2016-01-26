@@ -6,6 +6,10 @@ module RLP
       Infinity = 1.0 / 0.0
 
       class <<self
+        def fixed_length(l, allow_empty: false)
+          new(min_length: l, max_length: l, allow_empty: allow_empty)
+        end
+
         def valid_type?(obj)
           obj.instance_of?(String)
         end
