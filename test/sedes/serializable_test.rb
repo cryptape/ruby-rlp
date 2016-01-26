@@ -112,5 +112,49 @@ class SerializableSedesTest < Minitest::Test
     end
   end
 
-#TODO: test_make_mutable
+  def test_make_immutable
+    list_m = []
+    list_i = RLP::Utils.make_immutable! list_m
+    assert list_m.object_id != list_i.object_id
+
+    assert_equal 1, RLP::Utils.make_immutable!(1)
+    assert_equal 'a', RLP::Utils.make_immutable!('a')
+    assert_equal [1,2,3], RLP::Utils.make_immutable!([1,2,3])
+    assert_equal [1,2,'a'], RLP::Utils.make_immutable!([1,2,'a'])
+    assert_equal [[1],[2,[3],4],5,6], RLP::Utils.make_immutable!([[1], [2,[3],4],5,6])
+
+    t1a_data = [5, 'a', [0, '']]
+    t1b_data = [9, 'b', [2, '']]
+
+    t1a = Test1.new *t1a_data
+    t1b = Test1.new *t1b_data
+    t2  = Test2.new t1a, [t1a, t1b]
+
+    assert_equal true, t2.mutable?
+    assert_equal true, t2.field1.mutable?
+    assert_equal true, t2.field2[0].mutable?
+    assert_equal true, t2.field2[1].mutable?
+
+    t2.make_immutable!
+    assert_equal false, t2.mutable?
+    assert_equal false, t1a.mutable?
+    assert_equal false, t1b.mutable?
+    assert_equal t1a, t2.field1
+    assert_equal [t1a, t1b], t2.field2
+
+    t1a = Test1.new *t1a_data
+    t1b = Test1.new *t1b_data
+    t2  = Test2.new t1a, [t1a, t1b]
+
+    assert_equal true, t2.mutable?
+    assert_equal true, t2.field1.mutable?
+    assert_equal true, t2.field2[0].mutable?
+    assert_equal true, t2.field2[1].mutable?
+
+    assert_equal [t1a, [t2, t1b]], RLP::Utils.make_immutable!([t1a, [t2, t1b]])
+
+    assert_equal false, t2.mutable?
+    assert_equal false, t1a.mutable?
+    assert_equal false, t1b.mutable?
+  end
 end
