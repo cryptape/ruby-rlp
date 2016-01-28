@@ -4,10 +4,7 @@ module RLP
     include Error
     include Utils
 
-    def decode(rlp, options={})
-      sedes = options.delete(:sedes)
-      strict = options.delete(:strict) {|k| true }
-
+    def decode(rlp, sedes: nil, strict: true, options: {})
       rlp = str_to_bytes(rlp)
 
       begin
