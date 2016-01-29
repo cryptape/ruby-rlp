@@ -7,9 +7,13 @@ require 'rlp/sedes'
 require 'rlp/encode'
 require 'rlp/decode'
 
+require 'rlp/decode_lazy'
+require 'rlp/lazy_list'
+
 module RLP
   include Encode
   include Decode
+  include DecodeLazy
 
   extend self
 end

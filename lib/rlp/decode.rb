@@ -18,7 +18,7 @@ module RLP
       if sedes
         # FIXME: lazy man's kwargs
         obj = sedes.is_a?(Sedes::Serializable) ?
-          sedes.deserialize(item, exclude: options[:exclude], extra: options[:extra]) :
+          sedes.deserialize(item, **options) :
           sedes.deserialize(item)
 
         if obj.respond_to?(:_cached_rlp)
