@@ -4,6 +4,30 @@ module RLP
     include Error
     include Utils
 
+    ##
+    # Decode an RLP encoded object.
+    #
+    # If the deserialized result `obj` has an attribute `_cached_rlp` (e.g. if
+    # `sedes` is a subclass of {RLP::Sedes::Serializable}), it will be set to
+    # `rlp`, which will improve performance on subsequent {RLP::Encode#encode}
+    # calls. Bear in mind however that `obj` needs to make sure that this value
+    # is updated whenever one of its fields changes or prevent such changes
+    # entirely ({RLP::Sedes::Serializable} does the latter).
+    #
+    # @param sedes [#deserialize] an object implementing a function
+    #   `deserialize(code)` which will be applied after decoding, or `nil` if
+    #   no deserialization should be performed
+    # @param options [Hash] additional keyword arguments that will be passed to
+    #   the deserializer
+    # @param strict [Boolean] if false inputs that are longer than necessary
+    #   don't cause an exception
+    #
+    # @return [Object] the decoded and maybe deserialized object
+    #
+    # @raise [RLP::Error::DecodingError] if the input string does not end after
+    #   the root item and `strict` is true
+    # @raise [RLP::Error::DeserializationError] if the deserialization fails
+    #
     def decode(rlp, sedes: nil, strict: true, options: {})
       rlp = str_to_bytes(rlp)
 
