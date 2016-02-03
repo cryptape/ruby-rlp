@@ -6,6 +6,24 @@
 
 A Ruby implementation of Ethereum's Recursive Length Prefix encoding (RLP). You can find the specification of the standard in the [Ethereum wiki](https://github.com/ethereum/wiki/wiki/RLP).
 
+## Installation
+
+Put it in your Gemfile:
+
+```
+gem 'ruby-rlp', require: 'rlp'
+```
+
+or
+
+```
+gem i ruby-rlp
+```
+
+## Usage
+
+Check [tests](test) for examples.
+
 ## Benchmark
 
 ```
