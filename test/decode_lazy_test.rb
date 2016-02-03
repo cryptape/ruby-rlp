@@ -31,9 +31,9 @@ class DecodeLazyTest < Minitest::Test
       assert_equal s.size, dec.call.size
       assert_equal s, dec.call
 
-      #assert_equal s, peek(encode(s), []) # TODO: implement peek
-      #assert_raises(IndexError) { peek(encode(s), 0) }
-      #assert_raises(IndexError) { peek(encode(s), [0] }
+      assert_equal s, peek(encode(s), [])
+      assert_raises(IndexError) { peek(encode(s), 0) }
+      assert_raises(IndexError) { peek(encode(s), [0]) }
     end
   end
 
@@ -65,7 +65,16 @@ class DecodeLazyTest < Minitest::Test
   end
 
   def test_peek
-    # TODO: test peek
+    assert_equal '', peek(encode(''), [])
+
+    nested = encode([0, 1, [2, 3]])
+    assert_equal 2, peek(nested, [2, 0], sedes: Sedes.big_endian_int)
+
+    [3, [3], [0,0], [2,2], [2,1,0]].each do |index|
+      assert_raises(IndexError) { peek(nested, index) }
+    end
+
+    assert_equal [2,3], peek(nested, 2, sedes: Sedes::CountableList.new(Sedes.big_endian_int))
   end
 
 end

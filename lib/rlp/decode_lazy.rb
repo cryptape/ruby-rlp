@@ -68,5 +68,36 @@ module RLP
         raise "Invalid item type: #{t}"
       end
     end
+
+    ##
+    # Get a specific element from an rlp encoded nested list.
+    #
+    # This method uses {RLP::DecodeLazy#decode_lazy} and, thus, decodes only
+    # the necessary parts of the string.
+    #
+    # @example Usage
+    #   rlpdata = RLP.encode([1, 2, [3, [4, 5]]])
+    #   RLP.peek(rlpdata, 0, sedes: RLP::Sedes.big_endian_int) # => 1
+    #   RLP.peek(rlpdata, [2, 0], sedes: RLP::Sedes.big_endian_int) # => 3
+    #
+    # @param rlp [String] the rlp string
+    # @param index [Integer, Array] the index of the element to peek at (can be
+    #   a list for nested data)
+    # @param sedes [#deserialize] a sedes used to deserialize the peeked at
+    #   object, or `nil` if no deserialization should be performed
+    #
+    # @raise [IndexError] if `index` is invalid (out of range or too many levels)
+    #
+    def peek(rlp, index, sedes: nil)
+      ll = decode_lazy(rlp)
+      index = Array(index)
+
+      index.each do |i|
+        raise IndexError, "Too many indices given" if primitive?(ll)
+        ll = ll.fetch(i)
+      end
+
+      sedes ? sedes.deserialize(ll) : ll
+    end
   end
 end
