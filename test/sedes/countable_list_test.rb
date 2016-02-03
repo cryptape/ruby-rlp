@@ -61,10 +61,9 @@ class CountableListSedesTest < Minitest::Test
       serial = l1.serialize(n)
       assert_raises(DeserializationError) { l3.deserialize(serial) }
 
-# TODO: test for lazy
-#      ll = decode_lazy(encode(serial))
-#      assert_raises(DeserializationError) { l3.deserialize(ll) }
-#      assert_equal 3+1, ll._elements.size
+      ll = decode_lazy(encode(serial))
+      assert_raises(DeserializationError) { l3.deserialize(ll) }
+      assert_equal 3+1, ll.instance_variable_get(:@elements).size
     end
   end
 end
