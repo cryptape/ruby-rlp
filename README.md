@@ -1,6 +1,8 @@
 # ruby-rlp
 
-![travis build status](https://travis-ci.org/janx/ruby-rlp.svg?branch=master)
+[![MIT License](https://img.shields.io/packagist/l/doctrine/orm.svg)](LICENSE)
+[![travis build status](https://travis-ci.org/janx/ruby-rlp.svg?branch=master)](https://travis-ci.org/janx/ruby-rlp)
+[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/github/janx/ruby-rlp/master)
 
 A Ruby implementation of Ethereum's Recursive Length Prefix encoding (RLP). You can find the specification of the standard in the [Ethereum wiki](https://github.com/ethereum/wiki/wiki/RLP).
 
