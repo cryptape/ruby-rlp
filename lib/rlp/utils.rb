@@ -30,7 +30,7 @@ module RLP
     end
 
     def list?(item)
-      item.respond_to?(:each)
+      !primitive?(item) && item.respond_to?(:each)
     end
 
     def bytes_to_str(v)
