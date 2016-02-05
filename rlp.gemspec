@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{lib}/**/*"] + ["LICENSE", "README.md"]
 
-  s.add_development_dependency('rake', ['~> 10.5.0'])
+  s.add_development_dependency('rake', ['~> 10.5'])
   s.add_development_dependency('minitest', '5.8.3')
   s.add_development_dependency('yard', '0.8.7.6')
 end
