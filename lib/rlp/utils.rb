@@ -38,7 +38,7 @@ module RLP
     end
 
     def str_to_bytes(v)
-      v.dup.force_encoding('ascii-8bit')
+      v.b
     end
 
     def big_endian_to_int(v)
