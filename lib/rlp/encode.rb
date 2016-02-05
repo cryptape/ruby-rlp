@@ -73,7 +73,7 @@ module RLP
     end
 
     def encode_primitive(item)
-      return str_to_bytes(item) if item.size == 1 && item.ord < 0x80
+      return str_to_bytes(item) if item.size == 1 && item.ord < PRIMITIVE_PREFIX_OFFSET
 
       payload = str_to_bytes item
       prefix = length_prefix payload.size, PRIMITIVE_PREFIX_OFFSET
