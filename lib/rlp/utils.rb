@@ -38,7 +38,7 @@ module RLP
     end
 
     def str_to_bytes(v)
-      v.b
+      bytes?(v) ? v : v.b
     end
 
     def big_endian_to_int(v)
@@ -53,8 +53,12 @@ module RLP
 
     def encode_hex(b)
       raise TypeError, "Value must be an instance of String" unless b.instance_of?(String)
-      b = str_to_bytes(b) unless b.encoding.name == 'ASCII-8BIT'
       b.unpack("H*").first
+    end
+
+    BINARY_ENCODING = 'ASCII-8BIT'.freeze
+    def bytes?(s)
+      s.encoding.name == BINARY_ENCODING
     end
   end
 end
