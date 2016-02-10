@@ -63,7 +63,7 @@ module RLP
 
     BINARY_ENCODING = 'ASCII-8BIT'.freeze
     def bytes?(s)
-      s.encoding.name == BINARY_ENCODING
+      s && s.instance_of?(String) && s.encoding.name == BINARY_ENCODING
     end
   end
 end
