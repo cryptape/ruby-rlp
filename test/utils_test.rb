@@ -28,4 +28,15 @@ class UtilsTest < Minitest::Test
       assert_equal b, int_to_big_endian(i)
     end
   end
+
+  def test_encode_hex
+    assert_equal "", encode_hex("")
+    assert_equal "616263", encode_hex("abc")
+  end
+
+  def test_decode_hex
+    assert_equal "", decode_hex("")
+    assert_equal "abc", decode_hex("616263")
+  end
+
 end

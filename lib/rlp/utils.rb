@@ -56,6 +56,11 @@ module RLP
       b.unpack("H*").first
     end
 
+    def decode_hex(s)
+      raise TypeError, "Value must be an instance of string" unless s.instance_of?(String)
+      [s].pack("H*")
+    end
+
     BINARY_ENCODING = 'ASCII-8BIT'.freeze
     def bytes?(s)
       s.encoding.name == BINARY_ENCODING
