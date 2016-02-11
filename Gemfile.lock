@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rlp (0.5.2)
+    rlp (0.5.3)
 
 GEM
   remote: https://rubygems.org/
