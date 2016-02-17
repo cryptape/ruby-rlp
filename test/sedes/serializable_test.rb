@@ -157,4 +157,12 @@ class SerializableSedesTest < Minitest::Test
     assert_equal false, t1a.mutable?
     assert_equal false, t1b.mutable?
   end
+
+  def test_create_new_sedes_excluding_some_fields
+    cls = Test1.exclude [:field2]
+    assert_equal Test1, cls.superclass
+    assert_equal %i(field1 field3), cls.serializable_fields.keys
+    assert_equal %i(field1 field2 field3), Test1.serializable_fields.keys
+  end
+
 end

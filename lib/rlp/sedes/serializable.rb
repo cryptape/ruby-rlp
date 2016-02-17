@@ -68,6 +68,14 @@ module RLP
           obj.instance_variable_set :@_mutable, false
           obj
         end
+
+        ##
+        # Create a new sedes considering only a reduced set of fields.
+        #
+        def exclude(excluded_fields)
+          fields = serializable_fields.dup.delete_if {|k, v| excluded_fields.include?(k) }
+          Class.new(self).tap {|cls| cls.set_serializable_fields fields }
+        end
       end
 
       class <<self
