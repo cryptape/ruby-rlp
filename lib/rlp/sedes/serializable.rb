@@ -93,6 +93,8 @@ module RLP
       def serializable_initialize(*args)
         options = args.last.is_a?(Hash) ? args.pop : {}
 
+        @_mutable = true
+
         field_set = self.class.serializable_fields.keys
 
         self.class.serializable_fields.keys.zip(args).each do |(field, arg)|
