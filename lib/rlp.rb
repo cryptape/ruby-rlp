@@ -1,3 +1,5 @@
+# -*- encoding : ascii-8bit -*-
+
 require 'rlp/constant'
 require 'rlp/data'
 require 'rlp/error'

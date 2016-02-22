@@ -1,3 +1,5 @@
+# -*- encoding : ascii-8bit -*-
+
 module RLP
 ##
   # A RLP encoded list which decodes itself when necessary.

@@ -1,3 +1,5 @@
+# -*- encoding : ascii-8bit -*-
+
 module RLP
   module DecodeLazy
     include Decode

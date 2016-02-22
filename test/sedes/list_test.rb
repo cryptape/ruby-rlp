@@ -1,3 +1,4 @@
+# -*- encoding : ascii-8bit -*-
 require 'test_helper'
 
 class ListSedesTest < Minitest::Test

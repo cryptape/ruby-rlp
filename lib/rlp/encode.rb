@@ -1,3 +1,5 @@
+# -*- encoding : ascii-8bit -*-
+
 module RLP
   module Encode
     include Constant
