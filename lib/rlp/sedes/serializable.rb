@@ -89,27 +89,42 @@ module RLP
       attr_accessor :_cached_rlp
 
       def initialize(*args)
-        serializable_initialize(*args)
+        serializable_initialize parse_field_args(args)
       end
 
-      def serializable_initialize(*args)
+      ##
+      # Mimic python's argument syntax, accept both normal arguments and named
+      # arguments. Normal argument overrides named argument.
+      #
+      def parse_field_args(args)
+        h = {}
+
         options = args.last.is_a?(Hash) ? args.pop : {}
-
-        @_mutable = true
-
         field_set = self.class.serializable_fields.keys
 
         self.class.serializable_fields.keys.zip(args).each do |(field, arg)|
           break unless arg
-          _set_field field, arg
+          h[field] = arg
           field_set.delete field
         end
 
         options.each do |field, value|
           if field_set.include?(field)
-            _set_field field, value
+            h[field] = value
             field_set.delete field
           end
+        end
+
+        h
+      end
+
+      def serializable_initialize(fields)
+        @_mutable = true
+
+        field_set = self.class.serializable_fields.keys
+        fields.each do |field, value|
+          _set_field field, value
+          field_set.delete field
         end
 
         raise TypeError, "Not all fields initialized" unless field_set.size == 0
