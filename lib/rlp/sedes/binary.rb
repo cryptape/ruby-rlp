@@ -3,7 +3,8 @@
 module RLP
   module Sedes
     class Binary
-      include RLP::Utils
+      include Error
+      include Utils
 
       Infinity = 1.0 / 0.0
 
