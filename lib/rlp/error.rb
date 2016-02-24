@@ -3,7 +3,7 @@
 module RLP
   module Error
 
-    class RLPException < Exception; end
+    class RLPException < StandardError; end
 
     class EncodingError < RLPException
       attr :obj
