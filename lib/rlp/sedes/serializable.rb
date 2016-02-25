@@ -34,6 +34,10 @@ module RLP
           end
         end
 
+        def inherit_serializable_fields!
+          @serializable_fields = superclass.serializable_fields
+        end
+
         def serializable_fields
           @serializable_fields
         end
