@@ -56,7 +56,9 @@ module RLP
           end
         end
 
-        def deserialize(serial, exclude: nil, extra: {})
+        def deserialize(serial, options: {})
+          exclude = options.delete(:exclude)
+
           begin
             values = serializable_sedes.deserialize(serial)
           rescue ListDeserializationError => e
@@ -66,7 +68,7 @@ module RLP
           params = Hash[*serializable_fields.keys.zip(values).flatten(1)]
           params.delete_if {|field, value| exclude.include?(field) } if exclude
 
-          obj = self.new params.merge(extra)
+          obj = self.new params.merge(options)
           obj.instance_variable_set :@_mutable, false
           obj
         end
