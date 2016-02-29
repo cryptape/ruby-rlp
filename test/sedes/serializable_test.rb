@@ -166,4 +166,31 @@ class SerializableSedesTest < Minitest::Test
     assert_equal %i(field1 field2 field3), Test1.serializable_fields.keys
   end
 
+  class Test3
+    include RLP::Sedes::Serializable
+
+    set_serializable_fields(
+      field1: RLP::Sedes.big_endian_int
+    )
+
+    attr :bar
+
+    def initialize(*args)
+      field1 = args[0] if args[0].is_a?(Integer)
+      options = args.last.instance_of?(Hash) ? args.last : {}
+
+      field1 = options.delete(:field1) if options.has_key?(:field1)
+      bar = options.delete(:bar) || 1
+
+      @bar = bar
+      super(field1)
+    end
+  end
+
+  def test_deserialize_with_extra_arguments
+    t = Test3.new(1, bar: 2)
+    assert_equal 1, t.field1
+    assert_equal 2, RLP.decode(RLP.encode(t), sedes: Test3, bar: 2).bar
+  end
+
 end

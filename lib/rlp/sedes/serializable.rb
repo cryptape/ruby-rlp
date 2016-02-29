@@ -60,7 +60,7 @@ module RLP
           end
         end
 
-        def deserialize(serial, options: {})
+        def deserialize(serial, **options)
           exclude = options.delete(:exclude)
 
           begin

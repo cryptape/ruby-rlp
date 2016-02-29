@@ -19,10 +19,10 @@ module RLP
     # @param sedes [#deserialize] an object implementing a function
     #   `deserialize(code)` which will be applied after decoding, or `nil` if
     #   no deserialization should be performed
-    # @param options [Hash] additional keyword arguments that will be passed to
-    #   the deserializer
     # @param strict [Boolean] if false inputs that are longer than necessary
     #   don't cause an exception
+    # @param * [Hash] additional keyword arguments that will be passed to
+    #   the deserializer
     #
     # @return [Object] the decoded and maybe deserialized object
     #
@@ -30,8 +30,10 @@ module RLP
     #   the root item and `strict` is true
     # @raise [RLP::Error::DeserializationError] if the deserialization fails
     #
-    def decode(rlp, sedes: nil, strict: true, options: {})
+    def decode(rlp, **options)
       rlp = str_to_bytes(rlp)
+      sedes = options.delete(:sedes)
+      strict = options.has_key?(:strict) ? options.delete(:strict) : true
 
       begin
         item, next_start = consume_item(rlp, 0)
@@ -42,8 +44,7 @@ module RLP
       raise DecodingError.new("RLP string ends with #{rlp.size - next_start} superfluous bytes", rlp) if next_start != rlp.size && strict
 
       if sedes
-        # FIXME: lazy man's kwargs
-        obj = sedes.is_a?(Sedes::Serializable) ?
+        obj = sedes.instance_of?(Class) && sedes.include?(Sedes::Serializable) ?
           sedes.deserialize(item, **options) :
           sedes.deserialize(item)
 
