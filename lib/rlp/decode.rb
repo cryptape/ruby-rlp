@@ -16,13 +16,15 @@ module RLP
     # is updated whenever one of its fields changes or prevent such changes
     # entirely ({RLP::Sedes::Serializable} does the latter).
     #
-    # @param sedes [#deserialize] an object implementing a function
-    #   `deserialize(code)` which will be applied after decoding, or `nil` if
-    #   no deserialization should be performed
-    # @param strict [Boolean] if false inputs that are longer than necessary
-    #   don't cause an exception
-    # @param * [Hash] additional keyword arguments that will be passed to
-    #   the deserializer
+    # @param options (Hash) deserialization options:
+    #
+    #   * sedes (Object) an object implementing a function `deserialize(code)`
+    #     which will be applied after decoding, or `nil` if no deserialization
+    #     should be performed
+    #   * strict (Boolean) if false inputs that are longer than necessary don't
+    #     cause an exception
+    #   * (any options left) (Hash) additional keyword arguments passed to the
+    #     deserializer
     #
     # @return [Object] the decoded and maybe deserialized object
     #
