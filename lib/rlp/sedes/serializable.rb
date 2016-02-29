@@ -139,10 +139,6 @@ module RLP
       def _set_field(field, value)
         make_mutable! unless instance_variable_defined?(:@_mutable)
 
-        if field == :balance
-          p mutable?
-          p field
-        end
         if mutable? || !self.class.serializable_fields.has_key?(field)
           instance_variable_set :"@#{field}", value
         else
