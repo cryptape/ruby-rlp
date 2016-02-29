@@ -105,7 +105,7 @@ module RLP
       elsif b0 < LIST_PREFIX_OFFSET + SHORT_LENGTH_LIMIT # short list
         [:list, b0 - LIST_PREFIX_OFFSET, start + 1]
       else # long list
-        raise DecodingError.new('Length starts with zero bytes", rlp') if rlp.slice(start+1) == BYTE_ZERO
+        raise DecodingError.new('Length starts with zero bytes', rlp) if rlp.slice(start+1) == BYTE_ZERO
 
         ll = b0 - LIST_PREFIX_OFFSET - SHORT_LENGTH_LIMIT + 1
         l = big_endian_to_int rlp[(start+1)...(start+1+ll)]
