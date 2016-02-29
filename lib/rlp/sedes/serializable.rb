@@ -125,7 +125,7 @@ module RLP
       end
 
       def serializable_initialize(fields)
-        @_mutable = true
+        make_mutable!
 
         field_set = self.class.serializable_fields.keys
         fields.each do |field, value|
@@ -137,10 +137,12 @@ module RLP
       end
 
       def _set_field(field, value)
-        unless instance_variable_defined?(:@_mutable)
-          @_mutable = true
-        end
+        make_mutable! unless instance_variable_defined?(:@_mutable)
 
+        if field == :balance
+          p mutable?
+          p field
+        end
         if mutable? || !self.class.serializable_fields.has_key?(field)
           instance_variable_set :"@#{field}", value
         else
@@ -158,7 +160,7 @@ module RLP
       end
 
       def make_immutable!
-        @_mutable = true
+        make_mutable!
         self.class.serializable_fields.keys.each do |field|
           ::RLP::Utils.make_immutable! send(field)
         end
@@ -166,6 +168,11 @@ module RLP
         @_mutable = false
         self
       end
+
+      def make_mutable!
+        @_mutable = true
+      end
+
     end
   end
 end
