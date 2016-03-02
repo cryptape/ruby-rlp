@@ -108,8 +108,8 @@ module RLP
         options = args.last.is_a?(Hash) ? args.pop : {}
         field_set = self.class.serializable_fields.keys
 
-        self.class.serializable_fields.keys.zip(args).each do |(field, arg)|
-          break unless arg
+        fields = self.class.serializable_fields.keys[0,args.size]
+        fields.zip(args).each do |(field, arg)|
           h[field] = arg
           field_set.delete field
         end
