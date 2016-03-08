@@ -61,6 +61,27 @@ module RLP
       end
     end
 
+    def descend(rlp, *path)
+      rlp = str_to_bytes(rlp)
+
+      path.each do |pa|
+        pos = 0
+
+        type, len, pos = consume_length_prefix rlp, pos
+        raise DecodingError.new("Trying to descend through a non-list!", rlp) if type != :list
+
+        pa.times do |i|
+          t, l, s = consume_length_prefix(rlp, pos)
+          pos = l + s
+        end
+
+        t, l, s = consume_length_prefix rlp, pos
+        rlp = rlp[pos...(l+s)]
+      end
+
+      rlp
+    end
+
     private
 
     ##
