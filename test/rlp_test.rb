@@ -63,4 +63,17 @@ class RLPTest < Minitest::Test
     assert_equal RLP.encode([3,4,5]), RLP.pop(RLP.pop(rlp, 0), 0)
     assert_equal RLP.encode([1,2,3,4]), RLP.pop(rlp)
   end
+
+  def test_compare_length
+    rlp = RLP.encode [1,2,3,4,5]
+    assert_equal -1, RLP.compare_length(rlp, 100)
+    assert_equal 1, RLP.compare_length(rlp, 1)
+    assert_equal 0, RLP.compare_length(rlp, 5)
+
+    rlp = RLP.encode []
+    assert_equal 0, RLP.compare_length(rlp, 0)
+    assert_equal 1, RLP.compare_length(rlp, -1)
+    assert_equal -1, RLP.compare_length(rlp, 1)
+  end
+
 end

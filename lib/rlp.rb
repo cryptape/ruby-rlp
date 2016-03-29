@@ -18,4 +18,7 @@ module RLP
   include DecodeLazy
 
   extend self
+
+  EMPTYLIST = encode([]).freeze
+
 end

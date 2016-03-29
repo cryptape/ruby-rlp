@@ -127,6 +127,27 @@ module RLP
       prefix + rlpdata
     end
 
+    def compare_length(rlp, length)
+      type, len, pos = consume_length_prefix rlp, 0
+      raise DecodingError.new("Trying to compare length of non-list!", rlp) if type != :list
+
+      return (length == 0 ? 0 : -length/length.abs) if rlp == EMPTYLIST
+
+      beginpos = pos
+      len = 0
+      loop do
+        return 1 if len > length
+
+        _, _len, _pos = consume_length_prefix rlp, pos
+        len += 1
+
+        break if _len + _pos >= rlp.size
+        pos = _len + _pos
+      end
+
+      len == length ? 0 : -1
+    end
+
     private
 
     ##
