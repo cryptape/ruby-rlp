@@ -82,6 +82,16 @@ module RLP
       rlp
     end
 
+    def append(rlp, obj)
+      type, len, pos = consume_length_prefix rlp, 0
+      raise DecodingError.new("Trying to append to a non-list!", rlp) if type != :list
+
+      rlpdata = rlp[pos..-1] + RLP.encode(obj)
+      prefix = length_prefix rlpdata.size, LIST_PREFIX_OFFSET
+
+      prefix + rlpdata
+    end
+
     private
 
     ##

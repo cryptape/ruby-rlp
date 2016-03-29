@@ -38,4 +38,12 @@ class RLPTest < Minitest::Test
     assert_equal RLP.encode([3,[4,[5]]]), RLP.descend(rlp, 1, 1)
     assert_equal RLP.encode([5]), RLP.descend(rlp, 1, 1, 1, 1)
   end
+
+  def test_append
+    rlp = RLP.encode [1, [2,3]]
+    assert_equal RLP.encode([1, [2,3], 4]), RLP.append(rlp, 4)
+
+    rlp = RLP.encode [1]
+    assert_equal RLP.encode([1, [2,3], 4]), RLP.append(RLP.append(rlp, [2,3]), 4)
+  end
 end
