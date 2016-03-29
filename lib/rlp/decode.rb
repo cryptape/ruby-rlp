@@ -92,6 +92,23 @@ module RLP
       prefix + rlpdata
     end
 
+    def insert(rlp, index, obj)
+      type, len, pos = consume_length_prefix rlp, 0
+      raise DecodingError.new("Trying to append to a non-list!", rlp) if type != :list
+
+      beginpos = pos
+      index.times do |i|
+        _, _len, _pos = consume_length_prefix rlp, pos
+        pos = _pos + _len
+        break if _pos >= rlp.size
+      end
+
+      rlpdata = rlp[beginpos...pos] + RLP.encode(obj) + rlp[pos..-1]
+      prefix = length_prefix rlpdata.size, LIST_PREFIX_OFFSET
+
+      prefix + rlpdata
+    end
+
     private
 
     ##
