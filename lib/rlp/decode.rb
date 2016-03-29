@@ -94,7 +94,7 @@ module RLP
 
     def insert(rlp, index, obj)
       type, len, pos = consume_length_prefix rlp, 0
-      raise DecodingError.new("Trying to append to a non-list!", rlp) if type != :list
+      raise DecodingError.new("Trying to insert to a non-list!", rlp) if type != :list
 
       beginpos = pos
       index.times do |i|
@@ -104,6 +104,24 @@ module RLP
       end
 
       rlpdata = rlp[beginpos...pos] + RLP.encode(obj) + rlp[pos..-1]
+      prefix = length_prefix rlpdata.size, LIST_PREFIX_OFFSET
+
+      prefix + rlpdata
+    end
+
+    def pop(rlp, index=2**50)
+      type, len, pos = consume_length_prefix rlp, 0
+      raise DecodingError.new("Trying to pop from a non-list!", rlp) if type != :list
+
+      beginpos = pos
+      index.times do |i|
+        _, _len, _pos = consume_length_prefix rlp, pos
+        break if _len + _pos >= rlp.size
+        pos = _len + _pos
+      end
+
+      _, _len, _pos = consume_length_prefix rlp, pos
+      rlpdata = rlp[beginpos...pos] + rlp[(_len+_pos)..-1]
       prefix = length_prefix rlpdata.size, LIST_PREFIX_OFFSET
 
       prefix + rlpdata

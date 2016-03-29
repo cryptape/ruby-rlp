@@ -49,7 +49,18 @@ class RLPTest < Minitest::Test
 
   def test_insert
     rlp = RLP.encode [1, 2, 3]
+    assert_equal RLP.encode([4, 1, 2, 3]), RLP.insert(rlp, 0, 4)
+    assert_equal RLP.encode([1, 2, 3, 4]), RLP.insert(rlp, 3, 4)
     assert_equal RLP.encode([1, 2, 4, 3]), RLP.insert(rlp, 2, 4)
     assert_equal RLP.encode([1, 2, 5, 4, 3]), RLP.insert(RLP.insert(rlp, 2, 4), 2, 5)
+  end
+
+  def test_pop
+    rlp = RLP.encode [1, 2, 3, 4, 5]
+    assert_equal RLP.encode([2,3,4,5]), RLP.pop(rlp, 0)
+    assert_equal RLP.encode([1,2,3,4]), RLP.pop(rlp, 4)
+    assert_equal RLP.encode([1,2,4,5]), RLP.pop(rlp, 2)
+    assert_equal RLP.encode([3,4,5]), RLP.pop(RLP.pop(rlp, 0), 0)
+    assert_equal RLP.encode([1,2,3,4]), RLP.pop(rlp)
   end
 end
