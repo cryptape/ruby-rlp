@@ -148,8 +148,6 @@ module RLP
       len == length ? 0 : -1
     end
 
-    private
-
     ##
     # Read an item from an RLP string.
     #
