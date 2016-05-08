@@ -60,6 +60,7 @@ module RLP
 
     def decode_hex(s)
       raise TypeError, "Value must be an instance of string" unless s.instance_of?(String)
+      raise TypeError, 'Non-hexadecimal digit found' unless s =~ /\A[0-9a-fA-F]*\z/
       [s].pack("H*")
     end
 

@@ -39,6 +39,8 @@ class UtilsTest < Minitest::Test
   def test_decode_hex
     assert_equal "", decode_hex("")
     assert_equal "abc", decode_hex("616263")
+    assert_raises(TypeError) { decode_hex('xxxx') }
+    assert_raises(TypeError) { decode_hex('\x00\x00') }
   end
 
 end
