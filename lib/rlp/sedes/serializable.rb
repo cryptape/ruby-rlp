@@ -18,20 +18,22 @@ module RLP
 
         def set_serializable_fields(fields)
           raise "Cannot override serializable fields!" if @serializable_fields
+          fields.each {|name, sedes| add_serializable_field name, sedes }
+        end
 
-          @serializable_fields = fields
+        def add_serializable_field(name, sedes)
+          @serializable_fields ||= {}
+          @serializable_fields[name] = sedes
 
-          fields.keys.each do |field|
-            class_eval <<-ATTR
-              def #{field}
-                @#{field}
-              end
+          class_eval <<-ATTR
+            def #{name}
+              @#{name}
+            end
 
-              def #{field}=(v)
-                _set_field(:#{field}, v)
-              end
-            ATTR
-          end
+            def #{name}=(v)
+              _set_field(:#{name}, v)
+            end
+          ATTR
         end
 
         def inherit_serializable_fields!
