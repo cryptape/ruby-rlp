@@ -11,13 +11,13 @@ A Ruby implementation of Ethereum's Recursive Length Prefix encoding (RLP). You 
 Put it in your Gemfile:
 
 ```
-gem 'ruby-rlp', require: 'rlp'
+gem 'rlp'
 ```
 
 or
 
 ```
-gem i ruby-rlp
+gem i rlp
 ```
 
 ## Usage
