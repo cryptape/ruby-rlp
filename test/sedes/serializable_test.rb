@@ -193,4 +193,13 @@ class SerializableSedesTest < Minitest::Test
     assert_equal 2, RLP.decode(RLP.encode(t), sedes: Test3, bar: 2).bar
   end
 
+  class Test4 < Test1
+    add_serializable_field :field4, RLP::Sedes.big_endian_int
+    add_serializable_field :field5, RLP::Sedes.big_endian_int
+  end
+
+  def test_inherit
+    assert_equal %i(field1 field2 field3 field4 field5), Test4.serializable_fields.keys
+  end
+
 end

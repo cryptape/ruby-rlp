@@ -18,11 +18,16 @@ module RLP
 
         def set_serializable_fields(fields)
           raise "Cannot override serializable fields!" if @serializable_fields
+          @serializable_fields = {} # always reset
           fields.each {|name, sedes| add_serializable_field name, sedes }
         end
 
         def add_serializable_field(name, sedes)
-          @serializable_fields ||= {}
+          unless @serializable_fields
+            # append or reset
+            @serializable_fields = superclass.include?(Sedes::Serializable) ? superclass.serializable_fields.dup : {}
+          end
+
           @serializable_fields[name] = sedes
 
           class_eval <<-ATTR
