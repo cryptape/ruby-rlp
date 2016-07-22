@@ -140,7 +140,9 @@ module RLP
           field_set.delete field
         end
 
-        raise TypeError, "Not all fields initialized" unless field_set.size == 0
+        unless field_set.size == 0
+          raise TypeError, "Not all fields initialized. Missing: #{field_set}"
+        end
       end
 
       def _set_field(field, value)
