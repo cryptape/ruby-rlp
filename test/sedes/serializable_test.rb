@@ -202,4 +202,13 @@ class SerializableSedesTest < Minitest::Test
     assert_equal %i(field1 field2 field3 field4 field5), Test4.serializable_fields.keys
   end
 
+  def test_initialize_error_message
+    t1a_data = [5, 'a', ]
+
+    assert_raises "Not all fields initialized. Missing: [:field3]" do
+      t1a = Test1.new(*t1a_data)
+      Test1.serialize(t1a)
+    end
+  end
+
 end
