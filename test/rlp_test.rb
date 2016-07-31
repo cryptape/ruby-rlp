@@ -76,4 +76,12 @@ class RLPTest < Minitest::Test
     assert_equal -1, RLP.compare_length(rlp, 1)
   end
 
+  def test_favor_short_string_form
+    rlp = Utils.decode_hex 'b8056d6f6f7365'
+    assert_raises(DecodingError) { RLP.decode(rlp) }
+
+    rlp = Utils.decode_hex '856d6f6f7365'
+    assert_equal 'moose', RLP.decode(rlp)
+  end
+
 end

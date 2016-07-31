@@ -187,6 +187,7 @@ module RLP
 
         ll = b0 - PRIMITIVE_PREFIX_OFFSET - SHORT_LENGTH_LIMIT + 1
         l = big_endian_to_int rlp[(start+1)...(start+1+ll)]
+        raise DecodingError.new('Long string prefix used for short string', rlp) if l < SHORT_LENGTH_LIMIT
 
         [:str, l, start+1+ll]
       elsif b0 < LIST_PREFIX_OFFSET + SHORT_LENGTH_LIMIT # short list
@@ -196,7 +197,7 @@ module RLP
 
         ll = b0 - LIST_PREFIX_OFFSET - SHORT_LENGTH_LIMIT + 1
         l = big_endian_to_int rlp[(start+1)...(start+1+ll)]
-        raise DecodingError.new('Long list prefix used for short list', rlp) if l < 56
+        raise DecodingError.new('Long list prefix used for short list', rlp) if l < SHORT_LENGTH_LIMIT
 
         [:list, l, start+1+ll]
       end
