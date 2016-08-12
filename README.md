@@ -27,7 +27,7 @@ Check [tests](test) for examples.
 ## Benchmark
 
 ```
-ruby-rlp $ ruby -v -Ilib test/speed.py
+ruby-rlp $ ruby -v -Ilib test/speed.rb
 ruby 2.2.2p95 (2015-04-13 revision 50295) [x86_64-linux]
 Block serializations / sec: 2318.21
 Block deserializations / sec: 1704.61
