@@ -1,7 +1,7 @@
 # -*- encoding : ascii-8bit -*-
 
 module RLP
-##
+  ##
   # A RLP encoded list which decodes itself when necessary.
   #
   # Both indexing with positive indices and iterating are supported. Getting

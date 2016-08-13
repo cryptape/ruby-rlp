@@ -30,14 +30,11 @@ class SerializableSedesTest < Minitest::Test
     t1a_data = [5, 'a', [0, '']]
     t1b_data = [9, 'b', [2, '']]
 
-    t1a = Test1.new *t1a_data
-    t1b = Test1.new *t1b_data
+    t1a = Test1.new(*t1a_data)
+    t1b = Test1.new(*t1b_data)
     t2  = Test2.new t1a, [t1a, t1b]
 
     # equality
-    assert t1a == t1a
-    assert t1b == t1b
-    assert t2  == t2
     assert t1a != t1b
     assert t1b != t2
     assert t2  != t1a
@@ -127,8 +124,8 @@ class SerializableSedesTest < Minitest::Test
     t1a_data = [5, 'a', [0, '']]
     t1b_data = [9, 'b', [2, '']]
 
-    t1a = Test1.new *t1a_data
-    t1b = Test1.new *t1b_data
+    t1a = Test1.new(*t1a_data)
+    t1b = Test1.new(*t1b_data)
     t2  = Test2.new t1a, [t1a, t1b]
 
     assert_equal true, t2.mutable?
@@ -143,8 +140,8 @@ class SerializableSedesTest < Minitest::Test
     assert_equal t1a, t2.field1
     assert_equal [t1a, t1b], t2.field2
 
-    t1a = Test1.new *t1a_data
-    t1b = Test1.new *t1b_data
+    t1a = Test1.new(*t1a_data)
+    t1b = Test1.new(*t1b_data)
     t2  = Test2.new t1a, [t1a, t1b]
 
     assert_equal true, t2.mutable?

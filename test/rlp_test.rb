@@ -22,9 +22,7 @@ class RLPTest < Minitest::Test
       data = to_bytes in_out['in']
       expect = in_out['out'].upcase
       result = encode_hex(encode(data)).upcase
-      if result != expect
-        fail msg_format % [name, data, result, expect]
-      end
+      assert_equal result, expect, msg_format % [name, data, result, expect]
     end
   end
 
@@ -66,14 +64,14 @@ class RLPTest < Minitest::Test
 
   def test_compare_length
     rlp = RLP.encode [1,2,3,4,5]
-    assert_equal -1, RLP.compare_length(rlp, 100)
+    assert_equal (-1), RLP.compare_length(rlp, 100)
     assert_equal 1, RLP.compare_length(rlp, 1)
     assert_equal 0, RLP.compare_length(rlp, 5)
 
     rlp = RLP.encode []
     assert_equal 0, RLP.compare_length(rlp, 0)
     assert_equal 1, RLP.compare_length(rlp, -1)
-    assert_equal -1, RLP.compare_length(rlp, 1)
+    assert_equal (-1), RLP.compare_length(rlp, 1)
   end
 
   def test_favor_short_string_form

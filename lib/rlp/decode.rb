@@ -67,15 +67,15 @@ module RLP
       path.each do |pa|
         pos = 0
 
-        type, len, pos = consume_length_prefix rlp, pos
+        type, _, pos = consume_length_prefix rlp, pos
         raise DecodingError.new("Trying to descend through a non-list!", rlp) if type != :list
 
         pa.times do |i|
-          t, l, s = consume_length_prefix(rlp, pos)
+          _, l, s = consume_length_prefix(rlp, pos)
           pos = l + s
         end
 
-        t, l, s = consume_length_prefix rlp, pos
+        _, l, s = consume_length_prefix rlp, pos
         rlp = rlp[pos...(l+s)]
       end
 
@@ -83,7 +83,7 @@ module RLP
     end
 
     def append(rlp, obj)
-      type, len, pos = consume_length_prefix rlp, 0
+      type, _, pos = consume_length_prefix rlp, 0
       raise DecodingError.new("Trying to append to a non-list!", rlp) if type != :list
 
       rlpdata = rlp[pos..-1] + RLP.encode(obj)
@@ -93,7 +93,7 @@ module RLP
     end
 
     def insert(rlp, index, obj)
-      type, len, pos = consume_length_prefix rlp, 0
+      type, _, pos = consume_length_prefix rlp, 0
       raise DecodingError.new("Trying to insert to a non-list!", rlp) if type != :list
 
       beginpos = pos
@@ -110,7 +110,7 @@ module RLP
     end
 
     def pop(rlp, index=2**50)
-      type, len, pos = consume_length_prefix rlp, 0
+      type, _, pos = consume_length_prefix rlp, 0
       raise DecodingError.new("Trying to pop from a non-list!", rlp) if type != :list
 
       beginpos = pos
@@ -133,7 +133,6 @@ module RLP
 
       return (length == 0 ? 0 : -length/length.abs) if rlp == EMPTYLIST
 
-      beginpos = pos
       len = 0
       loop do
         return 1 if len > length
