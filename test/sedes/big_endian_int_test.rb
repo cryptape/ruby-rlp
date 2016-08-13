@@ -57,7 +57,7 @@ class BigEndianIntSedesTest < Minitest::Test
       assert_equal i, s.deserialize(s.serialize(i))
     end
 
-    [256**4, 256**4 + 1, 256**5, -1 -256, 'asdf'].each do |i|
+    [256**4, 256**4 + 1, 256**5, (-1 - 256), 'asdf'].each do |i|
       assert_raises(SerializationError) { s.serialize(i) }
     end
   end
