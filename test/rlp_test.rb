@@ -22,9 +22,7 @@ class RLPTest < Minitest::Test
       data = to_bytes in_out['in']
       expect = in_out['out'].upcase
       result = encode_hex(encode(data)).upcase
-      if result != expect
-        fail msg_format % [name, data, result, expect]
-      end
+      assert_equal result, expect, msg_format % [name, data, result, expect]
     end
   end
 

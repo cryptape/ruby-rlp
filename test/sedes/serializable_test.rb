@@ -35,9 +35,6 @@ class SerializableSedesTest < Minitest::Test
     t2  = Test2.new t1a, [t1a, t1b]
 
     # equality
-    assert t1a == t1a
-    assert t1b == t1b
-    assert t2  == t2
     assert t1a != t1b
     assert t1b != t2
     assert t2  != t1a
